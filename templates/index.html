@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0">Subscribe to Weather Alerts</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead mb-4">
+                    Get personalized weather alerts and maintenance recommendations for your property.
+                    Our service takes into account your property's elevation, yard size, and location
+                    to provide tailored advice for property management.
+                </p>
+                
+                <form method="POST" class="needs-validation" novalidate>
+                    {{ form.csrf_token }}
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        {{ form.email(class="form-control", id="email", placeholder="your@email.com") }}
+                        {% if form.email.errors %}
+                            {% for error in form.email.errors %}
+                                <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="zip_code" class="form-label">Zip Code</label>
+                        {{ form.zip_code(class="form-control", id="zip_code", placeholder="e.g., 98225") }}
+                        {% if form.zip_code.errors %}
+                            {% for error in form.zip_code.errors %}
+                                <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="yard_size" class="form-label">Yard Size (in acres)</label>
+                            {{ form.yard_size(class="form-control", id="yard_size", placeholder="e.g., 0.5") }}
+                            {% if form.yard_size.errors %}
+                                {% for error in form.yard_size.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="elevation" class="form-label">Elevation (in feet)</label>
+                            {{ form.elevation(class="form-control", id="elevation", placeholder="e.g., 2700") }}
+                            {% if form.elevation.errors %}
+                                {% for error in form.elevation.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="submit" name="action" value="subscribe" class="btn btn-primary">Subscribe</button>
+                        <button type="submit" name="action" value="sample_daily" class="btn btn-secondary">Send Sample Daily</button>
+                        <button type="submit" name="action" value="sample_weekly" class="btn btn-info">Send Sample Weekly</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header bg-info text-white">
+                <h3 class="mb-0">Service Features</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Daily Updates</h4>
+                        <ul class="list-unstyled">
+                            <li>✓ Next day weather forecast</li>
+                            <li>✓ Temperature alerts</li>
+                            <li>✓ Precipitation warnings</li>
+                            <li>✓ Maintenance recommendations</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Weekly Summary</h4>
+                        <ul class="list-unstyled">
+                            <li>✓ 7-day weather outlook</li>
+                            <li>✓ Seasonal maintenance tips</li>
+                            <li>✓ Property management advice</li>
+                            <li>✓ Long-term weather trends</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

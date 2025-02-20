@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-success text-white">
+        <h2 class="mb-0">Current Subscribers</h2>
+    </div>
+    <div class="card-body">
+        {% if subscribers %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Location</th>
+                            <th>Yard Size (acres)</th>
+                            <th>Elevation (ft)</th>
+                            <th>Subscribed On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for subscriber in subscribers %}
+                            <tr>
+                                <td>{{ subscriber.email }}</td>
+                                <td>{{ subscriber.location }}</td>
+                                <td>{{ subscriber.yard_size }}</td>
+                                <td>{{ subscriber.elevation }}</td>
+                                <td>{{ subscriber.created_at.strftime('%Y-%m-%d') }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-center">No subscribers yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 
