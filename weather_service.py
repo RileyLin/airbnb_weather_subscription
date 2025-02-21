@@ -81,7 +81,7 @@ class WeatherService:
         return precautions
         
     def send_email(self, to_email: str, subject: str, content: str):
-        """Send email to subscriber using Outlook SMTP."""
+        """Send email to subscriber using Gmail SMTP."""
         msg = MIMEMultipart()
         msg['From'] = self.sender_email
         msg['To'] = to_email
@@ -90,15 +90,11 @@ class WeatherService:
         msg.attach(MIMEText(content, 'html'))
         
         try:
-            logger.info(f"Attempting to establish SMTP connection to Outlook server")
+            logger.info(f"Attempting to establish SMTP connection to Gmail server")
             import ssl
             context = ssl.create_default_context()
             
-            with smtplib.SMTP('smtp.office365.com', 587) as server:
-                server.ehlo()
-                server.starttls(context=context)
-                server.ehlo()
-                
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as server:
                 logger.info(f"SMTP connection established. Attempting login with sender email: {self.sender_email}")
                 server.login(self.sender_email, self.email_password)
                 logger.info("SMTP login successful")
@@ -109,7 +105,7 @@ class WeatherService:
                 
         except smtplib.SMTPAuthenticationError as e:
             logger.error(f"SMTP Authentication failed: {str(e)}")
-            raise ValueError("Failed to authenticate with Outlook. Please check your email and password.")
+            raise ValueError("Failed to authenticate with Gmail. Please check your email and password.")
         except Exception as e:
             logger.error(f"Failed to send email to {to_email}: {str(e)}")
             raise ValueError(f"Failed to send email: {str(e)}")
